@@ -1,0 +1,13 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+NMH_SES_ENHANCEMENT htmlIncludeOrString
+</title>
+</head>
+<body>
+
+<@dynamichtml sceComputeDisplayURL @>
+<$if xWebsiteObjectType like 'Data File' and xRegionDefinition like 'REG_DEF_HAPPENINGS'$>idcplg?IdcService=WCM_PLACEHOLDER&dataFileDocName=<$dDocName$>&templateDocName=REG_TEMPLATE_HAPPENINGS_1<$elseif xWebsiteObjectType like 'Data File' and xRegionDefinition like 'NMHPAGEREGIONDEF'$>idcplg?IdcService=WCM_PLACEHOLDER&dataFileDocName=<$dDocName$>&templateDocName=NMHPAGETEMPLATE<$else$><$include super.sceComputeDisplayURL $><$endif$><@end@>
+
+</body></html>

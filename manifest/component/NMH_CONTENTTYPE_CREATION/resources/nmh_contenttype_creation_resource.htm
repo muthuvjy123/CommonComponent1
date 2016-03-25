@@ -1,0 +1,279 @@
+<!-- ***************************************************************************************
+ File Name: nmh_contenttype_creation_resource.htm
+ Creation Date: 03-04-2010
+ Author: Sapient\Smitha George
+ Description  : This is hide the OOTB checkin and search menus and introduce our custom menus
+ Revision:  1.0
+-----------------------------------------------------------------------------
+
+============================================================================================
+Modification Log
+----------------
+Date(dd-mm-yyyy)Modified By  			Revision		Comments
+-----------      --------------			-------- 		--------------
+03-3-2010		Smitha George           1.0              tempalte created
+04-05-2010		Manjunath Paramesan		1.1				 Bug Fixes
+21-05-2010		Smitha George           1.2              Artifact artf1094086 : Issues in Content
+														 Check In Form for Notification
+07-04-2011		Raquel Specketer		1.3				 Clean up profiles and rules
+05-05-2011		Raquel Specketer		1.4				 Populate Security Group and Account for a folder check in.
+08-31-2011		Kevin Brown		1.5		Remove code that takes out update, checkout, and checkinsimilar for WCMWebAssets content
+********************************************************************************************"-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+NMH_CONTENTTYPE_CREATION htmlIncludeOrString
+</title>
+</head>
+<body>
+<!-- change default Primary File label to be just File.-->
+<@wwPrimFile=File@>
+
+<!----------------------------------------------------------------------
+	Collection includes - section begin
+	This section defines includes used to set the security group and account on the checkin form
+	if the folder selected has the xForceFolderSecurity set to true.
+------------------------------------------------------------------------>
+
+<!-- The collection_browse_set_other_submit_functions include adds a function on the collection browse submit button to set the security.-->
+<@dynamichtml collection_browse_set_other_submit_functions@>
+<$include super.collection_browse_set_other_submit_functions$>
+<$submit="SetForceSecurity('"&xForceFolderSecurity&"','"&dSecurityGroup&"','"&dDocAccount&"');" & submit$>
+<@end@>
+
+<!-- The collection_browse_custom_script include creates the function on the collection browse popup.-->
+<@dynamichtml collection_browse_custom_script@>
+<$include super.collection_browse_custom_script$>
+function SetForceSecurity(forcesecurity,securitygroup,docaccount)
+{
+	if (window.callback.OnIDValueForceSecurity)
+	{
+		window.callback.OnIDValueForceSecurity(forcesecurity,securitygroup,docaccount);
+	}
+	else
+	{
+/*		if (window.callback.toxForceFolderSecurity)
+			window.callback.toxForceFolderSecurity.value=forcesecurity;
+		else
+			if (window.callback.xForceFolderSecurity)
+				window.callback.xForceFolderSecurity.value=forcesecurity;
+
+		if (window.callback.todSecurityGroup)
+			window.callback.todSecurityGroup.value=securitygroup;
+		else
+			if (window.callback.dSecurityGroup)
+				window.callback.dSecurityGroup.value=securitygroup;
+
+		if (window.callback.todDocAccount)
+			window.callback.todDocAccount.value=account;
+		else
+			if (window.callback.dDocAccount)
+				window.callback.dDocAccount.value=account;
+*/
+	}
+}
+<@end@>
+
+<!-- The std_collection_browse_set include creates the function on the checkin/query pages.-->
+<@dynamichtml std_collection_browse_set@>
+<$include super.std_collection_browse_set$>
+<script>
+	function <$Prefix$>OnIDValueForceSecurity(forcefoldersecurity,securitygroup,account)
+	{
+		<$if isQuery AND isTrue(isQuery)$>
+		<$else$>
+			if (forcefoldersecurity)
+			{
+				document.<$formName$>.dSecurityGroup.value=securitygroup;
+				document.<$formName$>.dDocAccount.value=account;
+			}
+		<$endif$>
+	}
+</script>
+<@end@>
+
+<!-- The std_collection_browse_set_object_props adds the function to the callback object on the checkin/query pages.-->
+<@dynamichtml std_collection_browse_set_object_props@>
+<$include super.std_collection_browse_set_object_props$>
+		obj.OnIDValueForceSecurity=<$Prefix$>OnIDValueForceSecurity;
+<@end@>
+<!----------------------------------------------------------------------
+	Collection includes - section end
+------------------------------------------------------------------------>
+
+
+<!-- Change the menu system to add the custom New Check In - This is the 11g Version-->
+<@dynamichtml custom_navigation_menu_items@>
+<$include super.custom_navigation_menu_items$>
+	<$rsFirst("NavigationMenuItems")$>
+	<$rsFindNextRow("NavigationMenuItems", "id", "NEW_CHECK_IN")$>
+	<$currRow = NavigationMenuItems.#row$>
+
+	<$NavigationMenuItems.id = "CUSTOM_CHECK_IN"$>
+	<$NavigationMenuItems.label = "New Check In"$>
+	<$NavigationMenuItems.linkType = "cgi"$>
+	<$NavigationMenuItems.linkData = js('IdcService=NMH_CHECKIN_FORM')$>
+
+	<$rsFirst("NavigationMenuItems")$>
+	<$rsFindNextRow("NavigationMenuItems", "id", "SEARCH")$>
+	<$currRow = NavigationMenuItems.#row$>
+
+	<$NavigationMenuItems.id = "CUSTOM_SEARCH"$>
+	<$NavigationMenuItems.label = "Search"$>
+	<$NavigationMenuItems.linkType = "cgi"$>
+	<$NavigationMenuItems.linkData = js('IdcService=GET_DOC_PAGE&Action=GetTemplatePage&Page=STANDARD_QUERY_PAGE')$>
+
+<@end@>
+
+<!-- Change the menu system to add the custom New Check In  - This is the 10g Version-->
+<@dynamichtml custom_finish_layout_init_10gVersion_remove@>
+
+<$include super.custom_finish_layout_init$>
+		navBuilder.deleteItem("SEARCH");
+
+		navBuilder.deleteItem("NEW_CHECK_IN");
+
+		navBuilder.addChildNodeTo('NAVTREE', 'item', 'id==CUSTOM_CHECK_IN', 'label==New Check In', 'url==<$HttpCgiPath$>?IdcService=NMH_CHECKIN_FORM');
+
+
+		if (navBuilder.menuA)
+		navBuilder.menuA.addTopLevelNode("CUSTOM_CHECK_IN","MY_PROFILE");
+
+		else if (navBuilder.trayB)
+		navBuilder.trayB.addTopLevelNode("CUSTOM_CHECK_IN","MY_PROFILE");
+
+		if (navBuilder.menuA)
+		navBuilder.menuA.addTopLevelNode("CUSTOM_SEARCH","MY_PROFILE");
+
+		else if (navBuilder.trayB)
+		navBuilder.trayB.addTopLevelNode("CUSTOM_SEARCH","MY_PROFILE");
+<@end@>
+
+
+
+<@dynamichtml new_content_option_remove@>
+	<$if strEquals(collectionType,"HIERARCHY") OR (not isRoot AND strEquals(collectionType,"QUERY"))$>
+
+	<$endif$>
+<@end@>
+
+<!-- Change menu options on the search result for My View and DAM displays -->
+<@dynamichtml content_action_popup_remove@>
+<div class="xuiPopupContainer" id="popup_<$inc("content_popupid")$>" style="display:none;white-space:nowrap;z-index:99" nowrap>
+<table class="xuiPopupTable">
+<$if ClientControlled and isLocalSearchCollection and dRevLabel$>
+	<$if strIndexOf(ClientControlled, "Outlook") < 0$>	
+		<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over', 'xuiPopupLink')"
+			onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+			<a class="menuA_ChildLinkText" href="javascript:executeOdmaAction2(document.OdmaActions<$dID$>, EDIT)">
+			<$lc("wwEdit")$></a></td></tr>
+		<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+			onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+			<a class="menuA_ChildLinkText" href="javascript:executeOdmaAction2(document.OdmaActions<$dID$>, COPY)">
+			<$lc("wwCopy")$></a></td></tr>
+		<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+			onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+			<a class="menuA_ChildLinkText" href="javascript:executeOdmaAction2(document.OdmaActions<$dID$>, NEW)">
+			<$lc("wwNew")$></a></td></tr>
+	<$endif$>
+	<$if strIndexOf(ClientControlled, "Outlook") >= 0$>
+		<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+			onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+			<a class="menuA_ChildLinkText" href="javascript:executeOdmaAction2(document.OdmaActions<$dID$>, NATIVE)">
+			<$lc("wwNative")$></a></td></tr>
+		<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+			onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+			<a class="menuA_ChildLinkText" href="javascript:executeOdmaAction2(document.OdmaActions<$dID$>, WEB)">
+			<$lc("wwWeb")$></a></td></tr>
+	<$endif$>
+	<$if not noForms$>
+	<form name="OdmaActions<$dID$>" method="GET" action="<$HttpCgiPath$>">
+		<input type=hidden name=IdcService value="SELECTDOC">
+		<input type=hidden name=dID value=<$dID$>>
+		<input type=hidden name=dDocName value="<$dDocName$>">
+		<input type=hidden name=ClientControlled value="<$ClientControlled$>">
+		<input type=hidden name=odmaAction value="">
+	</form>
+	<form name="Select<$dID$>" method="GET" action="<$HttpCgiPath$>">
+		<input type=hidden name=IdcService value="SELECTDOC">
+		<input type=hidden name=dID value=<$dID$>>
+		<input type=hidden name=dDocName value="<$dDocName$>">
+		<input type=hidden name=dDocTitle value="<$xml(dDocTitle)$>">
+	</form>
+	<$endif$>
+<$else$>
+	<$popupLinkTarget="_self"$>
+	<$if searchedRemote and not IsLocalCollection$>
+		<$popupLinkTarget="_blank"$>
+	<$endif$>
+	<$if not CollectionInfoEnabled:actionPopup or isTrue(CollectionInfoEnabled:actionPopup)$>
+		<$if not isLocalSearchCollection and VdkVgwKey and sCollectionID$>
+			<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+				onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+				<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=GET_EXTERNAL_DOC_INFO&dDocName=<$url(VdkVgwKey)$>&sCollectionID=<$url(sCollectionID)$>"
+					target="<$popupLinkTarget$>"><$lc("wwDocInfoTitle")$></a></td></tr>
+		<$else$>
+			<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+				onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+				<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=DOC_INFO&dID=<$dID$>&dDocName=<$url(dDocName)$>"
+				target="<$popupLinkTarget$>"><$lc("wwDocInfoTitle")$></a></td></tr>
+		<$endif$>
+	<$endif$>
+        <$if dRevRank like "0"$>
+          <$if dIsCheckedOut like "0"$>
+		  <$if NOT (#active.dDocType like "WCMWebAsset")$>
+	<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+		onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+		<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=CHECKOUT&dID=<$url(dID)$>&dDocName=<$url(dDocName)$>&dDocTitle=<$url(dDocTitle)$>"
+		target="<$popupLinkTarget$>"><$lc("wwCheckOut")$></a></td></tr>
+		<$endif$>
+          <$else$>
+	<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+		onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+		<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=CHECKIN_SEL_FORM&dID=<$url(dID)$>&dDocName=<$url(dDocName)$>&dDocTitle=<$url(dDocTitle)$>"
+		target="<$popupLinkTarget$>"><$lc("wwCheckIn")$></a></td></tr>
+	<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+		onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+		<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=UNDO_CHECKOUT&dID=<$url(dID)$>&dDocName=<$url(dDocName)$>&dDocTitle=<$url(dDocTitle)$>"
+		target="<$popupLinkTarget$>"><$lc("wwUndoCheckOut")$></a></td></tr>
+          <$endif$>
+        <$endif$>
+		<$if NOT (#active.dDocType like "WCMWebAsset")$>
+	<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+		onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+		<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=CHECKIN_SIMILAR_FORM&dID=<$url(dID)$>&dDocName=<$url(dDocName)$>"
+		target="<$popupLinkTarget$>"><$lc("wwContentCheckinSimilarButton")$></a></td></tr>
+		<$endif$>
+	<$if dcShowExportLink()$>
+		<tr><td class="xuiPopupLink" nowrap onMouseOver="glowPopupRow(this,'xuiPopupLink_over','xuiPopupLink')"
+			onMouseOut="fadePopupRow(this,'xuiPopupLink')" onClick="linkItem_onclick(event, this)">
+			<$if isLocalSearchCollection$>
+				<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=GET_DYNAMIC_CONVERSION&dDocName=<$url(dDocName)$>&RevisionSelectionMethod=LatestReleased<$ProxyNativeFormat$>" target="<$#active.DcExportLinkTarget$>">
+				<$lc("wwDCHtmlRendition")$></a>
+			<$else$>
+				<a class="menuA_ChildLinkText" href="<$SearchHttpCgiPath$>?IdcService=GET_EXTERNAL_DYNAMIC_CONVERSION&VdkVgwKey=<$VdkVgwKey$>&sCollectionID=<$sCollectionID$><$ProxyNativeFormat$>" target="<$#active.DcExportLinkTarget$>">
+				<$lc("wwDCHtmlRendition")$></a>
+			<$endif$>
+			</td></tr>
+	<$endif$>
+<$endif$>
+<$include custom_search_results_action_popup$>
+</table>
+</div>
+<@end@>
+
+<!--Change search results to remove menu options for web content.-->
+<@dynamichtml setup_search_results_action_popups@>
+<$include super.setup_search_results_action_popups$>
+	<$if (#active.dDocType like "WCMWebAsset")$>
+		<$if rsFindRowPrimary("PopupProps",lc("wwCheckOut"))$>
+			<$rsDeleteRow("PopupProps")$>
+		<$endif$>
+		<$if rsFindRowPrimary("PopupProps",lc("wwContentCheckinSimilarButton"))$>
+			<$rsDeleteRow("PopupProps")$>
+		<$endif$>
+	<$endif$>
+<@end@>
+
+</body></html>

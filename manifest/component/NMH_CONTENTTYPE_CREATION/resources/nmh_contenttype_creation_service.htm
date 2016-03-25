@@ -1,0 +1,68 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+NMH_CONTENTTYPE_CREATION service
+</title>
+</head>
+<body>
+
+<@table NMH_CONTENTTYPE_CREATION_Services@>
+<table border=1><caption><strong>Scripts For Custom Services</strong></caption>
+<tr>
+	<td>Name</td><td>Attributes</td><td>Actions</td>
+</tr>
+<tr>
+	<td>NMH_CHECKIN_FORM</td>
+	<td>DocService
+		35
+		NMH_CHECKIN_FORM
+		null
+		null<br>
+		null</td>
+	<td></td>
+</tr>
+
+
+
+
+<tr> <!-- not using this one anymore-->
+	<td>NMH_SS_CHECKIN_WEB_ASSET</td>
+	<td>DocService
+		50
+		CHECKIN_NEW_FORM
+		null
+		null<br>
+		!csUnableToBuildCheckInForm</td>
+	<td>3:setLocalValues:ssIsWebAssetCheckin,1,ssUseSSCheckin,1,AllowPrimaryMetaFile,0,suppressAlternateFile,1:0:null
+		3:ssLoadRegionDefinition:SSRegionDefinitionJson,1::!csRegionDefinitionLoadFailed
+		3:ssGetBinderSwitchContentConfig:SSRegionDefinitionJson::!csSwitchContentConfigFailed
+		3:renameValues:regionDefinition,xRegionDefinition::null
+		3:ssSetSwitchContentDefaultMetadata:::null
+		3:ssSetSwitchContentWebsiteObjectType:::null
+		3:ssGetDefaultDocuments:::null
+		3:localizeResultSetStrings:SSDefaultDocuments,description,primaryFile::null
+		3:setLocalValues:isNew,1:0:null
+		3:loadMetaOptionsLists::0:!csErrorRetrievingOptionLists
+		3:loadDocDefaults:::null
+		3:loadDefaultInfo::0:null
+		3:loadMetaDefaults::0:null
+		3:loadProfileForRequest:CheckinNew:0:null</td>
+</tr>
+
+<tr>  <!-- not sure we want to override this.  It is only here to change the confirmation page -->  
+	<td>SS_CHECKIN_NEW</td>
+	<td>DocService
+		2
+		NMH_EDIT_FILE
+		null
+		documents<br>
+		!csUnableToCheckIn(dDocName)</td>
+	<td>3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:null
+		3:doSubService:CHECKIN_NEW_SUB:12:null</td>
+</tr>
+
+</table>
+<@end@>
+</body></html>

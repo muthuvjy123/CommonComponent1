@@ -1,0 +1,17 @@
+﻿<?hda version="11gR1-11.1.1.5.0-idcprod1-110413T184243" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+CreateDate=7/13/11 9:15 AM
+blFieldTypes=CreateDate date
+ComponentName=NMH_SES_ENHANCEMENT
+blDateFormat=M/d/yy {h:mm[:ss] {aa}[zzz]}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet Manifest
+2
+entryType
+location
+component
+NMH_SES_ENHANCEMENT/NMH_SES_ENHANCEMENT.hda
+componentExtra
+NMH_SES_ENHANCEMENT/readme.txt
+@end
+

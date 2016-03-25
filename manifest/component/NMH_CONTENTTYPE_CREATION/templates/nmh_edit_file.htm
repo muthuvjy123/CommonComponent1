@@ -1,0 +1,78 @@
+<$c=" ***************************************************************************************
+ File Name:   nmh-edit file                                   
+ Creation Date: 03-04-2010                                                                  
+ Author: Sapient\Smitha George                                                        
+ Description  : Checkin confirmation page for site studio content checkin it will display
+ Edit data file link
+ Revision:  1.0
+-----------------------------------------------------------------------------
+								   
+============================================================================================ 
+Modification Log                                                                                
+----------------                                                                                
+Date             Modified By  			Revision		Comments                                                
+-----------      --------------			-------- 		--------------	                                           
+03-3-2010      Smitha George           1.0              tempalte created
+********************************************************************************************"$>
+<$include std_doctype_html_decl$>
+
+<head>
+	<$defaultPageTitle=lc("wwCheckInConfirmation", dDocTitle)$>
+	<$include std_html_head_declarations$>
+	
+	<script type="text/javascript">
+		<$include custom_checkin_confirm_script$>
+	</script>
+</head>
+
+<$include body_def$>
+
+<$include std_page_begin$>
+
+<$include std_header$>
+<table  summary="">
+	<tr>
+		<td width="<$StdPageWidth$>"><h1 class="underlinePageTitle"><$lc("wwCheckInConfirmation", dDocTitle)$></h1></td>
+	</tr>
+</table>
+
+<table border="0" width="<$StdPageWidth$>" summary="">
+<tr>
+    <td>
+	    <span class=infoLabel><$include doc_name_tag$>: </span><span class=tableEntry><$dDocName$></span>
+	    &nbsp;&nbsp;<span class="xxsmall">
+	    <font color="<$if navHeaderTextColor$><$navHeaderTextColor$><$else$>#999999<$endif$>">
+	    <b>[<a href="<$HttpCgiPath$>?IdcService=WCM_BEGIN_EDIT_SESSION&amp;dDocName=<$dDocName$>" target="_blank">Edit DataFile</a>]</b><b><a href="<$HttpCgiPath$>?IdcService=DOC_INFO&dID=<$dID$>&dDocName=<$url(dDocName)$><$if coreContentOnly$>&coreContentOnly=<$coreContentOnly$><$endif$>">[<$lc("wwContentInfoLabel")$>]</a></b>
+	    </font>
+	    </span>
+	</td>
+	 </tr>
+	 <tr>
+	<td></td>
+	 </tr>
+
+<tr>
+	<td><span class=infoLabel><$lc("wwContentTitleLabel")$></span><span class=tableEntry><$dDocTitle$></span></td>
+</tr>
+<$if not strEquals(dDocAuthor, UserName)$>
+<tr>
+    <td><span class=infoLabel><$lc("wwContentAuthorLabel")$></span><span class=tableEntry><$dDocAuthor$></span></td>
+</tr>
+<$endif$>
+<tr>
+	<td><span class=infoLabel><$lc("wwContentCheckinUserLabel")$></span><span class=tableEntry><$UserName$></span></td>
+</tr>
+<tr>
+    
+</tr>
+<tr>
+    <td><hr></td>
+</tr>
+
+ 
+
+</table>
+ 
+
+</body>
+</html>

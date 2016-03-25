@@ -1,0 +1,19 @@
+﻿<?hda version="11gR1-11.1.1.3.0-idcprod1-110203T111959" jcharset=UTF8 encoding=utf-8?>
+@Properties LocalData
+CreateDate=11/17/11 1:54 PM
+blFieldTypes=CreateDate date
+ComponentName=NMH_CONTENTTYPE_CREATION
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet Manifest
+2
+entryType
+location
+component
+NMH_CONTENTTYPE_CREATION/NMH_CONTENTTYPE_CREATION.hda
+componentExtra
+NMH_CONTENTTYPE_CREATION/readme.txt
+componentClasses
+NMH_CONTENTTYPE_CREATION/classes/
+@end
+

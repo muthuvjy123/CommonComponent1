@@ -1,0 +1,209 @@
+<$c=" ***************************************************************************************
+ File Name:                                      
+ Creation Date: 03-04-2010                                                                  
+ Author: Sapient\Smitha George                                                        
+ Description  : Checkin form which will allow the user to select a content type and go to 
+ content creation form
+ Revision:  1.0
+-----------------------------------------------------------------------------
+								   
+============================================================================================ 
+Modification Log                                                                                
+----------------                                                                                
+Date             Modified By  			Revision		Comments                                                
+-----------      --------------			-------- 		--------------	                                           
+03-3-2010      Smitha George           1.0              tempalte created
+04-20-2011	   Raquel Specketr		   2.0				Set IdcProfile field.  General cleanup
+********************************************************************************************"$>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+NMH_CONTENTTYPE_CREATION NMH_CHECKIN_FORM
+</title>
+<$include std_checkin_html_head_declarations$>
+
+<$include std_html_head_declarations$>
+</head>
+<body class="popupWindow"  >
+<SCRIPT LANGUAGE="JavaScript">
+
+function submitForm(form){
+ 
+if(form.contenttype.value=="Page")
+{
+form.IdcService.value="NMH_SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.PAGE$>";
+form.dpTriggerValue.value="Page";
+form.xIdcProfile.value="Page";
+form.submit();
+}
+else if(form.contenttype.value=="Policy")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Policy";
+form.xIdcProfile.value="Policy";
+//form.dDocName.value=form.dDocTitle.value;
+form.submit();
+}
+else if(form.contenttype.value=="Alert")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.ALERT$>";
+form.dpTriggerValue.value="Alert";
+form.xIdcProfile.value="Alert";
+form.submit();
+}
+else if(form.contenttype.value=="Notification")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.NOTIFY$>";
+form.dpTriggerValue.value="Notification";
+form.xIdcProfile.value="Notification";
+form.submit();
+}
+else if(form.contenttype.value=="Feature")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.FEATURE$>";
+form.dpTriggerValue.value="Feature";
+form.xIdcProfile.value="Feature";
+form.submit();
+}
+else if(form.contenttype.value=="Form")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Form";
+form.xIdcProfile.value="Form";
+form.submit();
+}
+else if(form.contenttype.value=="Template")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Template";
+form.xIdcProfile.value="Template";
+form.submit();
+}
+else if(form.contenttype.value=="Multimedia")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Multimedia";
+form.xIdcProfile.value="Multimedia";
+form.submit();
+}
+else if(form.contenttype.value=="Document")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Document";
+form.xIdcProfile.value="Document";
+form.submit();
+}
+else if(form.contenttype.value=="Job-Description")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Job-Description";
+form.xIdcProfile.value="Job-Description";
+form.submit();
+}
+else if(form.contenttype.value=="Global-Content")
+{
+ form.IdcService.value="CHECKIN_NEW_FORM";
+form.dpTriggerValue.value="Global-Content";
+form.xIdcProfile.value="Global-Content";
+form.submit();
+}
+else if(form.contenttype.value=="Navigation")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.NAVIGATION$>";
+form.dpTriggerValue.value="Navigation";
+form.xIdcProfile.value="Navigation";
+form.submit();
+}
+else if(form.contenttype.value=="Department")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.NAVIGATION$>";
+form.dpTriggerValue.value="Department";
+form.xIdcProfile.value="Department";
+form.submit();
+}
+//Added by Nandini
+else if(form.contenttype.value=="Happenings")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="<$#env.HAPPENINGS$>";
+form.dpTriggerValue.value="Happenings";
+form.xIdcProfile.value="Happenings";
+form.submit();
+}
+/**else if(form.contenttype.value=="ENews")
+{
+form.IdcService.value="SS_CHECKIN_WEB_ASSET";
+form.regionDefinition.value="NMHENews";
+form.dpTriggerValue.value="ENews";
+form.xIdcProfile.value="ENews";
+form.submit();
+}**/
+
+
+ //alert(form.regionDefinition.value);
+}
+function popupClose(){				
+window.close();
+}
+</script>
+
+	<form  name="nmhcheckinform" method=GET action="<$HttpCgiPath$>">
+				 
+			<input type="hidden" name="IdcService" value="SS_CHECKIN_WEB_ASSET">	
+			 
+				<input type="hidden" name="regionDefinition" value="">
+
+				<input type="hidden" name="coreContentOnly" value="1">
+				<input type="hidden" name="xWebsiteObjectType" value="Data File">
+				<input type=hidden name="dpTriggerValue" value="<$if dpTriggerValue$><$dpTriggerValue$><$endif$>">
+				<input type=hidden name="xIdcProfile" value="<$if xIdcProfile$><$xIdcProfile$><$endif$>">
+				<!-- <input type="hidden" name="dUSer" value="sysadmin"> -->
+				 
+			<hr>	 
+			<table>
+			<TH> NMH Content Types </th>
+			 
+			<tr></tr><tr></tr>
+
+
+					 	<TR>
+					 		<td> Select a Content Type</td>
+							<TD><select name="contenttype" > 							
+						 	<option value ="Document">Document</option>
+							 <!--option value ="ENews">ENews</option-->
+							<option value ="Feature">Feature</option>
+							<option value ="Form">Form</option>
+							<option value ="Global-Content">Global-Content</option>
+							<option value ="Happenings">Happenings</option><!--Added by Nandini-->
+							<option value ="Job-Description">Job-Description</option>
+							<option value ="Multimedia">Multimedia</option>
+							<option value ="Navigation">Navigation</option>						
+							<option value ="Notification">Notification</option>
+							<option value ="Page">Page-Content</option>
+							<option value ="Policy">Policy</option>
+							<option value ="Template">Template</option>
+						</select></TD><td class="buttonRSpacing"><input type=Submit name=Select value="OK" onClick="submitForm(document.nmhcheckinform)"></td>
+					 	</TR>
+						 
+						 
+
+					 	 </table>	
+						 <hr>
+				 
+					 
+<$include std_page_end$>
+ 
+
+
+					
+
+
+ 
+</form></html>
