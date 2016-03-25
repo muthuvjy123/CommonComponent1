@@ -1,0 +1,113 @@
+﻿<$include std_doctype_html_decl$>
+
+<head>
+	<$if msgPageTitleInclude$>
+	<$msgPageTitle=strTrimWs(inc(msgPageTitleInclude))$>
+	<$elseif msgPageTitleString$>
+	<$msgPageTitle=lc(msgPageTitleString)$>
+	<$else$>
+	<$msgPageTitle=lc("wwContentServerMessage")$>
+	<$endif$>
+	<$defaultPageTitle=msgPageTitle$>
+	<$include std_html_head_declarations$>
+
+</head>
+
+<$include body_def$>
+<$include std_page_begin$>
+<$include std_header$>
+
+<$dID=docID$>
+<$executeService("GET_REVISION_INFO")$>
+<input type="button" name="insert" id="btnBack" value="< Back" onClick="window.history.back()" style="margin: 5px;text-align: left" align="left"  >
+<$numRows = rsNumRows("METADATA_INFO")$>
+<$if numRows eq 0$>
+<br/><br/><br/>
+<h4 class="customPageTitleNonAuthorizedUser">There are no MetaData updates for '<$REVISION_INFO.dDocTitle$>'</h4>
+<$else$>
+ 
+  <table border=0 style="width:100%" summary="">
+   <tr>
+    <td colspan=2 align=center><h4 class=pageTitle>MetaData History for '<$REVISION_INFO.dDocTitle$>'</h4></td>
+   </tr>
+  </table>
+  <br><br>
+  <table class="xuiListTable" style="width:100%" cellpadding="0" cellspacing="0" summary="<$lc("wwRmaMetadataHistoryTableSummary")$>">
+  <tr>
+   <th class="xuiListHeaderCell" scope="col" style="width:10%"><div class="xuiListHeaderDiv"><$lc("wwUser")$></div></th>
+   <th class="xuiListResizeDragCell_Header" scope="col">&nbsp;</th>
+   <th class="xuiListHeaderCell" scope="col" style="width:5%"><div class="xuiListHeaderDiv"><$lc("wwInfo")$></div></th>
+   <th class="xuiListResizeDragCell_Header" scope="col">&nbsp;</th>
+   <th class="xuiListHeaderCell" scope="col" style="width:15%"><div class="xuiListHeaderDiv"><$lc("Action Date")$></div></th>
+   <th class="xuiListResizeDragCell_Header" scope="col">&nbsp;</th>
+   <th class="xuiListHeaderCell" scope="col" style="width:70%"><div class="xuiListHeaderDiv"><$lc("Changes")$></div></th>
+  </tr>
+  <$executeService("GET_DOCMETA_DEFINITION_CUSTOM")$>
+  <$loop METADATA_INFO$>
+ <$if showDetailInfo and rmaNotFirstInfoItem$>
+  </div>
+  </table></td></tr>
+ <$endif$> 
+
+  <tr>
+   <td class="xuiListContentCell_Odd"><div><$METADATA_INFO.updatedUser$></div></td>
+   <td class="xuiListResizeDragCell_Item">&nbsp;</td>
+   <td class="xuiListContentCell_Odd">  
+    <div class="xuiListCellDivCenter">
+     <a href="<$HttpCgiPath$>?IdcService=DOC_INFO&dID=<$docID$>"><img src="<$HttpSkinRoot$>InfoIcon_sm.gif" border="0" alt="<$lc("wwInfo")$>" title="<$lc("wwInfo")$>"></a>
+    </div>   
+   </td>
+   <td class="xuiListResizeDragCell_Item">&nbsp;</td>
+   <td class="xuiListContentCell_Odd"><div><$metaUpdateDate$></div></td>
+   <td class="xuiListResizeDragCell_Item">&nbsp;</td>
+   <td class="xuiListContentCell_Odd">
+    <div class="xuiListCellDivCenter">
+    <br>    
+    <table class="xuiListTable" style="width:99%" cellpadding="0" cellspacing="0" summary="<$lc("wwRmaMetadataHistoryFieldChangesTableSummary")$>">
+     <tr>
+      <th class="xuiListHeaderCell" scope="col"><div class="xuiListHeaderDiv">Field Name</div></th>
+      <th class="xuiListResizeDragCell_Header" scope="col">&nbsp;</th>
+      <th class="xuiListHeaderCell" scope="col"><div class="xuiListHeaderDiv">Old Value</div></th>
+      <th class="xuiListResizeDragCell_Header" scope="col">&nbsp;</th>
+      <th class="xuiListHeaderCell" scope="col"><div class="xuiListHeaderDiv">New Value</div></th>
+     </tr>
+	 <$if not strEquals(metaOldValue, metaNewValue)$>
+	 <tr>	 
+   <$if metaName like "xComments"$>
+		<$metaCaption="Comments"$>
+	<$elseif metaName like "dDocAuthor"$>
+		<$metaCaption="Document Author"$>
+	<$elseif metaName like "dDocTitle"$>
+		<$metaCaption="Document Title"$>
+	<$else$>
+	<$loop MetaDefinition$>
+		<$if dName like metaName$>
+		<$metaCaption=dCaption$>		
+		<$endif$>
+    <$endloop$>
+	<$endif$>
+   <td class="xuiListContentCell_Odd"><div ><$metaCaption$></div></td>
+   <td class="xuiListResizeDragCell_Item">&nbsp;</td>
+   <td class="xuiListContentCell_Odd"><div style="overflow:"><$metaOldValue$></div></td>
+   <td class="xuiListResizeDragCell_Item">&nbsp;</td>
+   <td class="xuiListContentCell_Odd"><div><$metaNewValue$></div></td>
+  </tr>
+<$endif$>
+ </table>
+</td></tr>
+<$endloop$>	
+</table>
+
+<$endif$>
+
+</body>
+</html>
+<style>
+.customPageTitleNonAuthorizedUser{
+	color: #660000 !important;
+	font-size: 10pt;
+    font-weight: bold;	
+	padding: 2px 2px 2px 8px;
+	text-align: center;
+}
+</style>

@@ -1,0 +1,41 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+OnwardPathReportGenerator htmlIncludeOrString</title></head>
+<body>
+
+<@dynamichtml searchapi_result_menus_setup@>
+<$include super.searchapi_result_menus_setup$>
+<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "SearchDownload"$>
+		<$PageMenusData.parentId = "QUERY_ACTIONS"$>
+		<$PageMenusData.label = "Download Result"$>
+		<$PageMenusData.type = "item"$>
+		<$PageMenusData.href = HttpCgiPath&"?<$QUERY_STRING$>&IsJava=1&MergeInclude=spreadsheet_search_results"$>
+		<$PageMenusData.loadOrder = 50$>
+<@end@>
+
+<@dynamichtml spreadsheet_search_results@>
+<$Iterator=1$><$counter=0$><$rsCreateResultSet("MasterRs", "dDocName,dDocTitle,dDocAuthor,dSecurityGroup,xComments,xVendor")$><$TotalRows=getValue("#local","TotalRows")$><$ResultCount=getValue("#local","ResultCount")$><$StartRow=1$><$PageNumber=1$><$loopwhile isTrue(Iterator)$><$QueryText=getValue("#local","UnparsedQueryText")$><$StartRow=StartRow$><$PageNumber=PageNumber$><$executeService("GET_SEARCH_RESULTS")$><$numRows = rsNumRows("SearchResults")$><$rsAppend("MasterRs", "SearchResults")$><$counter=counter+numRows$><$if numRows eq ResultCount$><$StartRow=counter+1$><$PageNumber=PageNumber+1$><$else$><$Iterator=0$><$endif$><$endloop$>Content ID,Title,Author,Security Group,Comments,Vendor
+<$loop MasterRs$>
+<$dDocName$>,<$dDocTitle$>,<$dDocAuthor$>,<$dSecurityGroup$>,<$xComments$>,<$xVendor$>
+<$endloop$>
+<$setContentType("text/csv")$>
+<$Date=dateCurrent()$>
+<$Date=formatDateWithPattern(Date, "MM-dd-y H.mm")$>
+<$Name1="attachment;filename="$>
+<$Name2="Search_Results_"$>
+<$Name3=Date$>
+<$Name4=".csv"$>
+<$ProfileName=getValue("#local","xIdcProfile")$>
+<$if ProfileName$>
+<$Name5=Name1&ProfileName&"_"&Name2&Name3&Name4$>
+<$else$>
+<$Name5=Name1&Name2&Name3&Name4$>
+<$endif$>
+<$setHttpHeader("Content-Disposition",Name5)$>
+<@end@>
+
+</body>
+</html>

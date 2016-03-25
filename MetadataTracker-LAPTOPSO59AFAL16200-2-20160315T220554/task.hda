@@ -1,0 +1,87 @@
+﻿<?hda version="11.1.1.9.0-2015-04-14 07:19:29Z-r126792" jcharset="UTF8" encoding="utf-8"?>
+@Properties LocalData
+TaskName=MetadataTracker-LAPTOPSO59AFAL16200-2-20160315T220554
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+cmuTaskVersion=2
+origTaskName=MetadataTracker
+@end
+@ResultSet components
+1
+item
+OnwardPathMetadataTracker
+@end
+@ResultSet display-schematables
+11
+schTableName
+schTableCanonicalName
+schTableDescription
+schColumnList
+schTablePrimaryKey
+schTableRowCreateTimestamp
+schTableRowModifyTimestamp
+schTableLastLoaded
+schTableIsUpToDate
+schIsSystemObject
+item
+METAUPDATETRACKER
+metaupdatetracker
+METAUPDATETRACKER
+docID,contID,updatedUser,metaName,metaOldValue,metaNewValue,metaUpdateDate
+
+
+
+
+
+
+METAUPDATETRACKER
+@end
+@ResultSet display-components
+18
+name
+location
+status
+classpath
+libpath
+installID
+featureExtensions
+classpathorder
+libpathorder
+Launchers
+LaunchersOrder
+componentsToDisable
+componentTags
+componentType
+useType
+version
+hasPreferenceData
+item
+OnwardPathMetadataTracker
+custom/OnwardPathMetadataTracker/OnwardPathMetadataTracker.hda
+Enabled
+$COMPONENT_DIR/classes
+
+
+
+
+
+
+
+
+
+local
+local
+Version 1 (03-15-2016)
+0
+OnwardPathMetadataTracker
+@end
+@ResultSet TaskSections
+1
+SectionID
+components
+schematables
+@end
+@ResultSet schematables
+1
+item
+METAUPDATETRACKER
+@end

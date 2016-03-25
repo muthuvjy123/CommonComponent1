@@ -1,0 +1,13 @@
+﻿<?hda version="11.1.1.9.0-2015-04-14 07:19:29Z-r126792" jcharset="UTF8" encoding="utf-8"?>
+@Properties LocalData
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+@end
+@ResultSet SectionItems
+3
+name
+type
+value
+schematables_METAUPDATETRACKER
+3
+schematables_METAUPDATETRACKER.hda
+@end

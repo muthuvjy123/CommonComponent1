@@ -1,0 +1,91 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+OnwardPathMetadataTracker service</title></head>
+<body>
+
+<@table OnwardPathMetadataTracker_Services@>
+<table border=1><caption><strong>Scripts For Custom Services</strong></caption>
+<tr>
+	<td>Name</td><td>Attributes</td><td>Actions</td>
+</tr>
+<tr>
+	<td>UPDATE_DOCINFO_SUB</td>
+	<td>DocService
+		2
+		null
+		SubService
+		null<br>
+		!csUnableToUpdateInfo(dDocName)</td>
+	<td>3:lockContent:dID:0:!csUnableToLockContent(dDocName)
+		5:QdocInfo:DOC_INFO:2:!csItemNotUpdated(dDocName)!csRevisionNoLongerExists<br>
+		3:mapNamedResultSetValues:DOC_INFO,dRevClassID,dRevClassID,dCreateDate,dCreateDate:0:null
+		3:mapResultSet:QlatestID,dID,dCurRevID:0:null
+		3:checkIsLatestRev:setLocalIfTrue:0:null
+		5:Qdocuments:DOC_LIST:0:!csItemNotUpdated(dDocName)
+		3:populateMissingDocumentValues:DOC_INFO::null
+		3:prepareCheckinSecurity::0:null
+		3:checkSecurity::0:!csUnableToUpdateInfo(dDocName)
+		3:checkDocRules:isNotPublished:0:null
+		3:setLocalValues:IsUpdateMetaOnly,1,isUpdate,1,isInfoOnly,,isEditMode,1:0:null
+		3:checkWorkflow:WF_INFO,isUpdateRev,DOC_INFO:0:!csItemNotUpdated(dDocName)!csItemIsInWorkflow(dWfName)
+		3:setMetaDataOnlyInfo:DOC_INFO:0:null
+		3:validateStandard::0:!csUnableToUpdateInfo(dDocName)
+		3:updateContentModification:Update Document:0:null
+		3:validateCheckinData:Urevision2,updateInfo:0:null
+		3:metaCurrentValue:::null
+		3:updateDocInfo:DOC_INFO,DOC_LIST:0:null
+		3:doSubserviceIfMetafile:REMOVE_METAFILE_SUB:0:null
+		2:Urevision2::0:null
+		2:Umeta::0:null
+		3:conditionalUpdateOriginalName::0:null
+		3:setLocalValues:wfAction,META_UPDATE:0:null
+		3:doSubserviceIfMetafile:REPLACE_METAFILE_SUB,UPDATE_DOCINFO_STATUS:0:null
+		3:docHistoryInfo:Update,IdocHistory:1:null
+		3:metaUpdatedValue:::null</td>
+</tr>
+<tr>
+	<td>GET_REVISION_INFO</td>
+	<td>Service
+		33
+		null
+		null
+		null<br>
+		null</td>
+	<td>5:qGetRevisionCurrent:REVISION_INFO::null</td>
+</tr>
+<tr>
+	<td>UPDATE_CONTENT_METADATA_CUSTOM</td>
+	<td>Service
+		33
+		null
+		null
+		null<br>
+		null</td>
+	<td>2:IRevisionMetaValue:CONTENTLIST::null</td>
+</tr>
+<tr>
+	<td>METADATA_UPDATE_INFO</td>
+	<td>Service
+		33
+		METADATA_UPDATE_INFO_TEMPLATE
+		null
+		null<br>
+		null</td>
+	<td>5:QMetaTracker:METADATA_INFO::null</td>
+</tr>
+<tr>
+	<td>GET_DOCMETA_DEFINITION_CUSTOM</td>
+	<td>Service
+		33
+		null
+		null
+		null<br>
+		null</td>
+	<td>5:QMetaDefinition:MetaDefinition::null</td>
+</tr>
+</table>
+<@end@>
+</body>
+</html>

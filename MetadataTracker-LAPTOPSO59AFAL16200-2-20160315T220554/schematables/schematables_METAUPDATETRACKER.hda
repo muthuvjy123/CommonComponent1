@@ -1,0 +1,56 @@
+﻿<?hda version="11.1.1.9.0-2015-04-14 07:19:29Z-r126792" jcharset="UTF8" encoding="utf-8"?>
+@Properties LocalData
+IdcService=GET_SCHEMA_TABLE_INFO
+TableExists=true
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+blFieldTypes=StatusMessage message
+changedSubjects=
+dUser=Manoj
+localizedForResponse=1
+refreshSubjects=
+schTableDescription=METAUPDATETRACKER
+schTableName=METAUPDATETRACKER
+schVersion=1
+@end
+@ResultSet TableDefinition
+4
+ColumnName
+ColumnType
+ColumnLength
+IsPrimaryKey
+docID
+varchar
+20
+0
+contID
+varchar
+50
+0
+updatedUser
+varchar
+50
+0
+metaName
+varchar
+200
+0
+metaOldValue
+varchar
+2000
+0
+metaNewValue
+varchar
+2000
+0
+metaUpdateDate
+date
+
+0
+@end
+@ResultSet UserAttribInfo
+2
+dUserName
+AttributeInfo
+Manoj
+account,#none,15,account,#all,15,role,guest,15,role,authenticated,15,role,admin,15,role,sysmanager,15,role,refineryadmin,15,role,rmaadmin,15,role,pcmadmin,15,role,ermadmin,15
+@end

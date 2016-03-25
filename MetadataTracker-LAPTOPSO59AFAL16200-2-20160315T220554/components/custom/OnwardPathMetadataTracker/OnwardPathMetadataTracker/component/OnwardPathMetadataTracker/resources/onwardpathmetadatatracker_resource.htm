@@ -1,0 +1,36 @@
+﻿<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>
+OnwardPathMetadataTracker staticResTable</title></head>
+<body>
+
+<@table OnwardPathMetadataTracker_ServiceHandlers@>
+<table border=1><caption><strong>
+
+<tr>
+<td>serviceName</td><td>handler</td><td>searchOrder</td>
+</tr>
+
+<tr>
+<td>Service</td><td>com.onwardpath.owc.MetaValueCurrent</td><td>5</td>
+</tr>
+<tr>
+<td>Service</td><td>com.onwardpath.owc.MetaValueUpdated</td><td>5</td>
+</tr>
+</table>
+
+<@end@>
+<@dynamichtml custom_docinfo_menus_setup@>
+<$include super.custom_docinfo_menus_setup$>
+<$exec rsAppendNewRow("PageMenusData")$>
+		<$PageMenusData.nodeId = "MetaDataTracker"$>
+		<$PageMenusData.parentId = "CONTENT_ACTIONS"$>
+		<$PageMenusData.label = "MetaData Tracker"$>
+		<$PageMenusData.type = "item"$>
+		<$PageMenusData.href = HttpCgiPath&"?IdcService=METADATA_UPDATE_INFO&docID="&dID$>
+		<$PageMenusData.loadOrder = 50$>
+<@end@>
+
+</body>
+</html>

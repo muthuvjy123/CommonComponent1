@@ -1,0 +1,14 @@
+﻿<?hda version="11.1.1.9.0-2015-04-14 07:19:29Z-r126792" jcharset="UTF8" encoding="utf-8"?>
+@Properties LocalData
+IDC_Name=LAPTOPSO59AFAL16200
+TaskName=MetadataTracker-LAPTOPSO59AFAL16200-2-20160315T220554
+TaskSession=3395296160724046812
+blDateFormat=M/d{/yy}{ h:mm[:ss]{ a}}!mAM,PM!tAmerica/Chicago
+blFieldTypes=exportDate date
+cmuTaskVersion=2
+exportComponentVersion=2014_07_14-dev (rev 119272)
+exportDate=3/15/16 5:05 PM
+exportHost=LAPTOP-SO59AFAL
+exportOriginalTask=MetadataTracker
+exportServerVersion=7.3.5.185
+@end
